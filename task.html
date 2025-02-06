@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Video Layout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        
+        .left-column {
+            flex: 1;
+            min-width: 300px;
+            height: 500px; 
+        }
+
+        .left-column .video-container {
+            position: relative;
+            height: 100%; 
+            cursor: pointer;
+        }
+
+        .left-column .video-thumbnail {
+            width: 100%;
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 12px; 
+        }
+
+        .left-column .video-iframe {
+            width: 100%;
+            height: 100%; 
+            border: none;
+            border-radius: 12px; 
+        }
+
+        
+        .right-column {
+            flex: 1;
+            min-width: 300px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            height: 500px; 
+        }
+
+        .right-column .video-container {
+            position: relative;
+            height: 100%; 
+            cursor: pointer;
+        }
+
+        .right-column .video-thumbnail {
+            width: 100%;
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 8px; 
+        }
+
+        .right-column .video-iframe {
+            width: 100%;
+            height: 100%; 
+            border: none;
+            border-radius: 8px; 
+        }
+
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 48px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-container:hover .play-button {
+            opacity: 1; 
+        }
+
+       
+        .text-block {
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        
+        .static-image {
+            width: 100%;
+            height: 100%; 
+            border-radius: 8px;
+            object-fit: cover; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <div class="video-container" data-video-id="CpS5Ex1Wx-4">
+                <img src="https://picsum.photos/600/400" alt="Main video" class="video-thumbnail">
+                <i class="fas fa-play-circle play-button"></i>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <div class="video-container" data-video-id="CpS5Ex1Wx-4">
+                <img src="https://picsum.photos/300/200" alt="Top left" class="video-thumbnail">
+                <i class="fas fa-play-circle play-button"></i>
+            </div>
+
+            <div class="text-block">
+                <h2>Video Title</h2>
+                <p>Description goes here...</p>
+            </div>
+
+            <div class="video-container">
+                <img src="https://picsum.photos/300/200?grayscale" alt="Static Image" class="static-image">
+            </div>
+
+            <div class="video-container" data-video-id="CpS5Ex1Wx-4">
+                <img src="https://picsum.photos/300/200?blur" alt="Bottom right" class="video-thumbnail">
+                <i class="fas fa-play-circle play-button"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.video-container[data-video-id]').forEach(container => {
+            container.addEventListener('click', function() {
+                const videoId = this.dataset.videoId;
+                const iframe = document.createElement('iframe');
+                iframe.className = 'video-iframe';
+
+                
+                iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`);
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                iframe.setAttribute('allowfullscreen', '');
+
+               
+                this.innerHTML = '';
+                this.appendChild(iframe);
+            });
+        });
+    </script>
+</body>
+</html>
